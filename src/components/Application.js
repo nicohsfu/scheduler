@@ -45,12 +45,19 @@ const appointments = {
 
 export default function Application(props) {
 
-  const [day, setDay] = useState('Monday');
-  const [days, setDays] = useState([]);
+  const [state, setState] = useState({
+    day: "Monday",
+    days: []
+  });
+
+  // setState({ ...state, day: "Tuesday" });
+
+  const setDay = day => setState({ ...state, day });
+  const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
-    const testURL = `/api/days`;
-    axios.get(testURL).then(response => {
+    const url = `/api/days`;
+    axios.get(url).then(response => {
       // console.log("response.data: ", response.data);
       setDays(response.data);
     });
@@ -80,9 +87,9 @@ export default function Application(props) {
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
           <DayList
-            days={days}
+            days={state.days}
             // note that "value" and "onChange" are not keywords here, we just decided to name our props in this way
-            value={day}
+            value={state.day}
             onChange={setDay}
           />
         </nav>
