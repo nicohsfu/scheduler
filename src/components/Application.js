@@ -3,7 +3,7 @@ import axios from "axios";
 import "components/Application.scss";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
-import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 
 // const appointments = {
 //   "1": {
@@ -53,6 +53,7 @@ export default function Application(props) {
     interviewers: {}
   });
 
+  const dailyInterviewers = getInterviewersForDay(state, state.day);
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const setDay = day => setState({ ...state, day });
@@ -66,7 +67,7 @@ export default function Application(props) {
       // console.log("all[0].data: ", all[0].data); // /api/days
       // console.log("all[1].data: ", all[1].data); // /api/appointments
       // console.log("all[2].data: ", all[2].data); // /api/interviewers
-      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2] }));
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);
 
@@ -78,6 +79,7 @@ export default function Application(props) {
         id={appointment.id}
         time={appointment.time}
         interview={appointment.interview}
+        interviewers={dailyInterviewers}
       // {...appointment} // shorthand - spread operator - can be used for id/time/interview
       />
     );
