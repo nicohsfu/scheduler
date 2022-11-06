@@ -48,22 +48,20 @@ export function getInterview(state, interview) {
   // }
 }
 
-export function getInterviewersForDay (state, day) {
-  let interviewerList = [];
+export function getInterviewersForDay(state, day) {
+  let interviewersForThatDay = [];
 
-  for (const interviewerDay of state.days) {
-    if (interviewerDay.name === day) {
-      interviewerList = interviewerDay.interviewers;
-    }
-  };
-
-  let finalInterviewerList = interviewerList.map((id) => {
-    for (let interviewer in state.interviewers) {
-      if (Number(interviewer) === id) {
-        return state.interviewers[interviewer];
-      }
-    }
+  const interviewerObject = state.days.find((element) => {
+    return element.name === day;
   });
 
-  return finalInterviewerList;
+  if (!interviewerObject) {
+    return [];
+  }
+
+  interviewersForThatDay = interviewerObject.interviewers.map((element) => {
+    return state.interviewers[element];
+  });
+
+  return interviewersForThatDay;
 }
