@@ -45,10 +45,11 @@ export default function Application(props) {
       [id]: appointment
     };
 
-    setState({
-      ...state,
-      appointments
-    });
+    // PUT always takes in 2 args, second arg takes an object in this case
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then(() => {
+        setState({ ...state, appointments });
+      });
   }
 
   const appointmentList = dailyAppointments.map(appointment => {
