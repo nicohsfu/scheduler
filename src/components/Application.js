@@ -33,7 +33,7 @@ export default function Application(props) {
   }, []);
 
   function bookInterview(id, interview) {
-    console.log("id and interview", id, interview);
+    // console.log("id and interview", id, interview);
 
     const appointment = {
       ...state.appointments[id],
