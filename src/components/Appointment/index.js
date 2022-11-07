@@ -16,6 +16,15 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+
+    props.bookInterview(props.id, interview);
+  }
+
   return (
     <Fragment>
       <article className="appointment">
@@ -25,7 +34,9 @@ export default function Appointment(props) {
           {mode === EMPTY && <Empty onAdd={() => {
             transition(CREATE);
           }} />}
-          {mode === CREATE && (<Form onCancel={back}
+          {mode === CREATE && (<Form
+            onSave={save}
+            onCancel={back}
             student={props.interview && props.interview.student}
             interviewer={props.interview && props.interview.interviewer}
             interviewers={props.interviewers}

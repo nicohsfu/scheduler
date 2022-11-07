@@ -71,31 +71,24 @@ export default function Application(props) {
     });
   }, []);
 
+  function bookInterview(id, interview) {
+    console.log("id and interview", id, interview);
+  }
+
   const appointmentList = dailyAppointments.map(appointment => {
-    return (
-      <Appointment
-        key={appointment.id}
-
-        id={appointment.id}
-        time={appointment.time}
-        interview={appointment.interview}
-        interviewers={dailyInterviewers}
-      // {...appointment} // shorthand - spread operator - can be used for id/time/interview
-      />
-    );
-  });
-
-  const appointments = getAppointmentsForDay(state, state.day);
-
-  const schedule = appointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
 
     return (
       <Appointment
         key={appointment.id}
+
         id={appointment.id}
         time={appointment.time}
         interview={interview}
+        interviewers={dailyInterviewers}
+        // {...appointment} // shorthand - spread operator - can be used for id/time/interview
+
+        bookInterview={bookInterview}
       />
     );
   });
