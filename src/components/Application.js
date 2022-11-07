@@ -52,6 +52,23 @@ export default function Application(props) {
       });
   }
 
+  function cancelInterview(id, interview) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${id}`)
+      .then(() => {
+        setState({ ...state, appointments });
+      });
+  }
+
   const appointmentList = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
 
@@ -66,6 +83,7 @@ export default function Application(props) {
         // {...appointment} // shorthand - spread operator - can be used for id/time/interview
 
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
