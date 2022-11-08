@@ -9,8 +9,8 @@ export default function Form(props) {
   const [error, setError] = useState("");
 
   const cancel = () => {
-    props.onCancel();
     reset();
+    props.onCancel();
   };
 
   const reset = () => {
@@ -30,6 +30,7 @@ export default function Form(props) {
       return;
     }
 
+    setError("");
     props.onSave(student, interviewer);
   }
 
