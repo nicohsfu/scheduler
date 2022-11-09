@@ -1,4 +1,4 @@
-# Interview Scheduler
+# Interview Scheduler by Nico Hernandez
 
 ## Setup
 
@@ -21,3 +21,5 @@ npm test
 ```sh
 npm run storybook
 ```
+
+![description](URL)
