@@ -22,4 +22,14 @@ npm test
 npm run storybook
 ```
 
-![description](URL)
+## Booking an appointment
+
+![booking](https://github.com/nicohsfu/scheduler/blob/master/docs/booking.png?raw=true)
+
+## Deleting an appointment
+
+![deleting](https://github.com/nicohsfu/scheduler/blob/master/docs/deleting.png?raw=true)
+
+## Handling errors when the user does not provide a name/select an interviewer
+
+![error-handling](https://github.com/nicohsfu/scheduler/blob/master/docs/error-handling.png?raw=true)
