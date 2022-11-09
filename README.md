@@ -1,8 +1,22 @@
 # Interview Scheduler by Nico Hernandez
 
-## Setup
+Interview Scheduler is a single-page React application that allows users to book and cancel interviews. We combine a concise API with a WebSocket server to build a realtime experience.
 
-Install dependencies with `npm install`.
+# Technical Specifications
+- React
+- Webpack, Babel
+- Axios, WebSockets
+- Storybook, Webpack Dev Server, Jest, Cypress, Testing Library
+
+# Setup
+
+Note: The application uses data from the server [here](https://github.com/lighthouse-labs/scheduler-api).
+
+## Install dependencies with 
+
+```sh
+npm install
+```
 
 ## Running Webpack Development Server
 
@@ -21,6 +35,8 @@ npm test
 ```sh
 npm run storybook
 ```
+
+# Demo / Screenshots
 
 ## Booking an appointment
 
