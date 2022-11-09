@@ -12,29 +12,23 @@ export default function useApplicationData(initial) {
 
   const setDay = day => setState({ ...state, day });
 
-  function getCurrentDay(day, days) {
-    // TODO - use find instead of filter
-    // state.days.find(day => day.appointments.includes(id))
-    const foundDay = days.filter((d) => d.name === day); 
+  function updateSpots(state, appointments) {
+    const day = state.days.find((d) => d.name === state.day);
 
-    return foundDay[0]; // returns day *object* which has the spots property
-  }
+    let spots = 0;
 
-  function calcRemainingSpots(day, days, appointments) {
-    const currentDay = getCurrentDay(day, days);
+    for (const id of day.appointments) {
+      const appointment = appointments[id];
+      if (!appointment.interview) spots++;
+    }
 
-    const maxAppointmentId = currentDay.id * 5;
-    const minAppointmentId = maxAppointmentId - 4;
+    const newDay = { ...day, spots };
+    const newDays = state.days.map((day) => { return day.name === state.day ? newDay : day; });
 
-    let spotsRemaining = Object.values(appointments).filter((a) => a.id >= minAppointmentId && a.id <= maxAppointmentId && a.interview === null);
-    // console.log("spotsRemaining", spotsRemaining);
-
-    return spotsRemaining.length;
+    return newDays;
   }
 
   function bookInterview(id, interview) {
-    // console.log("id and interview", id, interview);
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -45,15 +39,10 @@ export default function useApplicationData(initial) {
       [id]: appointment
     };
 
-    const currentDay = state.days.find(day => day.appointments.includes(id));
-    const updatedSpots = calcRemainingSpots(state.day, state.days, appointments);
-
-    const newDay = { ...currentDay, spots: updatedSpots };
-    const newDays = state.days.map((day) => { return day.name === state.day ? newDay : day; });
-
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
-        setState(prev => ({ ...prev, appointments, days: newDays }));
+        const days = updateSpots(state, appointments);
+        setState(prev => ({ ...prev, appointments, days }));
       });
   }
 
@@ -68,15 +57,10 @@ export default function useApplicationData(initial) {
       [id]: appointment
     };
 
-    const currentDay = state.days.find(day => day.appointments.includes(id));
-    const updatedSpots = calcRemainingSpots(state.day, state.days, appointments);
-
-    const newDay = { ...currentDay, spots: updatedSpots };
-    const newDays = state.days.map((day) => { return day.name === state.day ? newDay : day; });
-
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
-        setState({ ...state, appointments, days: newDays });
+        const days = updateSpots(state, appointments);
+        setState({ ...state, appointments, days });
       });
   }
 
