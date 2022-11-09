@@ -54,14 +54,6 @@ describe("Application", () => {
     await waitForElement(() => getByText(container, "Archie Cohen"));
     // console.log("container: ", prettyDOM(container));
 
-
-    {
-      const days = getAllByTestId(container, "day"); // arr of days
-      const monday = days.find(day => queryByText(day, "Monday"));
-      console.log(prettyDOM(monday))
-    }
-
-
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
 
     // 3. Click the "Delete" button on the booked appointment.
@@ -89,6 +81,36 @@ describe("Application", () => {
 
     // console.log(prettyDOM(monday))
     expect(getByText(monday, "2 spots remaining").toBeInTheDocument);
+  });
+
+  it.only("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // 1. Render the Application.
+    const { container } = render(<Application />);
+
+    // 2. Wait until the text "Archie Cohen" is displayed.
+    await waitForElement(() => getByText(container, "Archie Cohen"));
+
+    const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
+
+    // 3. Click the "Edit" button on the booked appointment.
+    fireEvent.click(queryByAltText(appointment, "Edit"));
+
+    fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
+      target: { value: "Harry Potter" }
+    });
+    fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+    fireEvent.click(getByText(appointment, "Save"));
+
+    expect(getByText(appointment, "Saving").toBeInTheDocument);
+
+    await waitForElement(() => getByText(container, "Harry Potter"));
+    expect(getByText(appointment, "Harry Potter").toBeInTheDocument);
+
+    // 8. Check that the DayListItem with the text "Monday" also has the text "1 spot remaining".
+    const days = getAllByTestId(container, "day"); // arr of days
+    const monday = days.find(day => queryByText(day, "Monday"));
+
+    expect(getByText(monday, "1 spot remaining").toBeInTheDocument);
   });
 
 });
