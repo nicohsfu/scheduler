@@ -10,7 +10,7 @@ Interview Scheduler is a single-page React application that allows users to book
 
 # Setup
 
-Note: The application uses data from the server [here](https://github.com/lighthouse-labs/scheduler-api).
+Note: The application uses data from [here](https://github.com/lighthouse-labs/scheduler-api).
 
 ## Install dependencies with 
 
