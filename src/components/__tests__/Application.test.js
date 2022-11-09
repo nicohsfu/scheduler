@@ -83,7 +83,7 @@ describe("Application", () => {
     expect(getByText(monday, "2 spots remaining").toBeInTheDocument);
   });
 
-  it.only("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
     // 1. Render the Application.
     const { container } = render(<Application />);
 
