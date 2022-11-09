@@ -53,7 +53,7 @@ export default function Appointment(props) {
 
   return (
     <Fragment>
-      <article className="appointment">
+      <article className="appointment" data-testid="appointment">
         <Header time={props.time} />
 
         <Fragment>
