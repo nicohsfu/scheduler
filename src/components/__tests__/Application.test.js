@@ -18,13 +18,10 @@ describe("Application", () => {
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
     const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
-    // console.log(prettyDOM(container));
 
     const appointments = getAllByTestId(container, "appointment");
-    // console.log(prettyDOM(appointments));
 
     const appointment = appointments[0];
-    // console.log(prettyDOM(appointment));
 
     fireEvent.click(getByAltText(appointment, "Add"));
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
@@ -33,8 +30,6 @@ describe("Application", () => {
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
     fireEvent.click(getByText(appointment, "Save"));
 
-    // console.log(prettyDOM(appointment));
-
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
@@ -42,8 +37,6 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-
-    // console.log(prettyDOM(day));
 
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
   });
@@ -54,7 +47,6 @@ describe("Application", () => {
 
     // 2. Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
-    // console.log("container: ", prettyDOM(container));
 
     const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
 
@@ -66,13 +58,10 @@ describe("Application", () => {
 
     // 5. Click the "Confirm" button on the confirmation.
     const confirm = getByText(container, "Confirm");
-    // console.log("prettyDOM", prettyDOM(confirm));
-    // fireEvent.click(getByTestId(container, "confirm"));
     fireEvent.click(confirm);
 
     // 6. Check that the element with the text "Deleting" is displayed.
     getByText(container, "Deleting");
-    // expect(getByText(appointment, "Deleting")).toBeInTheDocument();
 
     // 7. Wait until the element with the "Add" button is displayed.
     await waitForElement(() => getAllByAltText(container, "Add"));
@@ -81,7 +70,6 @@ describe("Application", () => {
     const days = getAllByTestId(container, "day"); // arr of days
     const monday = days.find(day => queryByText(day, "Monday"));
 
-    // console.log(prettyDOM(monday))
     expect(getByText(monday, "2 spots remaining").toBeInTheDocument);
   });
 
@@ -141,7 +129,7 @@ describe("Application", () => {
     const { container } = render(<Application />);
     await waitForElement(() => getByText(container, "Archie Cohen"));
     const appointments = getAllByTestId(container, "appointment");
-    console.log("appts", appointments.length);
+    // console.log("appts", appointments.length);
     const appointment = appointments[1];
 
     fireEvent.click(getByAltText(appointment, "Delete"));
